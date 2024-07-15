@@ -12,7 +12,7 @@ class TagController extends Controller
      */
     public function index(Tag $tag)
     {
-        dump($tag->all());
+        return view('pages.tag.list',['tags'=>$tag->all()]);
     }
 
     /**
@@ -34,9 +34,10 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Tag $tag)
     {
         //
+        dump($tag->toArray());
     }
 
     /**
