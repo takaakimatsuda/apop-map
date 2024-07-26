@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagStoreRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Validator;
 
 class TagController extends Controller
 {
@@ -12,7 +14,8 @@ class TagController extends Controller
      */
     public function index(Tag $tag)
     {
-        return view('pages.tag.list',['tags'=>$tag->all()]);
+        $tags = Tag::all();
+        return view('pages.tag.list', ['tags' => $tags]);
     }
 
     /**
@@ -26,9 +29,9 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TagStoreRequest $request)
     {
-        //
+        dump($request->validate());
     }
 
     /**
