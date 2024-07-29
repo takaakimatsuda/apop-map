@@ -14,7 +14,7 @@ class TagStoreRequest extends FormRequest
         /**
          * @todo ここでTagを登録できるユーザーかをチェックする
          */
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class TagStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:1',
+            'name' => 'required|string|max:255',
         ];
     }
 
