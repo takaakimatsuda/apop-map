@@ -34,13 +34,10 @@ class TagController extends Controller
         // バリデーションは自動的に行われる
         // バリデーションが成功した後の処理
         $validatedData = $request->validated();
-
-        // tagsテーブルにデータをINSERT
         $tag = Tag::create([
             'name' => $validatedData['name'],
         ]);
-        // 必要に応じてリダイレクトやレスポンスを追加
-        return redirect()->back()->with('success', 'Tag created successfully!');
+        return redirect()->back()->with('success', 'タグが正常に作成されました！');
     }
 
     /**
@@ -73,6 +70,8 @@ class TagController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tag = Tag::findOrFail($id);
+        $tag->delete();
+        return redirect()->back()->with('success', 'タグが正常に削除されました！');
     }
 }
