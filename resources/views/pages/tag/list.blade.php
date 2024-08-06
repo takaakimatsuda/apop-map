@@ -16,7 +16,6 @@
         <table class="table-auto w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-200">
-                    <th class="px-4 py-2 border border-gray-300">ID</th>
                     <th class="px-4 py-2 border border-gray-300">タグ名</th>
                     <th class="px-4 py-2 border border-gray-300">操作</th>
                 </tr>
@@ -24,7 +23,6 @@
             <tbody>
                 @foreach ($tags as $tag)
                 <tr>
-                    <td class="border border-gray-300 px-4 py-2">{{ $tag->id }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ $tag->name }}</td>
                     <td class="border border-gray-300 px-4 py-2">
                         <form action="{{ route('tag.destroy', $tag->id) }}" method="POST" onsubmit="return confirm('本当にこのタグを削除しますか？');">
@@ -36,17 +34,17 @@
                 </tr>
                 @endforeach
                 <tr>
-                    <td class="border border-gray-300 px-4 py-2">新規タグ</td>
                     <td class="border border-gray-300 px-4 py-2">
                         <form action="{{ route('tag.store') }}" method="post" class="flex items-center">
                             @csrf
-                            <input type="text" name="name" value="{{ old('name') }}" class="border rounded py-2 px-3 mr-2 w-full">
+                            <input type="text" name="name" value="{{ old('name') }}" class="border rounded py-2 px-3 mr-2 w-full" placeholder="新規タグ">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">登録</button>
                         </form>
                         @error('name')
                         <p class="text-red-500 mt-2">{{ $message }}</p>
                         @enderror
                     </td>
+                    <td class="border border-gray-300 px-4 py-2"></td>
                 </tr>
             </tbody>
         </table>
