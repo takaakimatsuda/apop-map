@@ -6,6 +6,7 @@ use App\Http\Requests\TagStoreRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Facades\Log;
 
 class TagController extends Controller
 {
@@ -31,14 +32,17 @@ class TagController extends Controller
      */
     public function store(TagStoreRequest $request)
     {
-        // バリデーションは自動的に行われる
-        // バリデーションが成功した後の処理
         $validatedData = $request->validated();
         $tag = Tag::create([
             'name' => $validatedData['name'],
         ]);
+
+        \Log::info('Success message set in session');
+
         return redirect()->back()->with('success', 'タグが正常に作成されました！');
     }
+
+
 
     /**
      * Display the specified resource.
