@@ -12,8 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('event_id');  // 'event_id' カラムを主キーとして設定
+            $table->unsignedBigInteger('user_id');
+            $table->string('title');
+            $table->string('image_url')->nullable();
+            $table->string('dance_genre')->nullable();
+            $table->string('region')->nullable();
+            $table->string('venue_name')->nullable();
+            $table->string('venue_address')->nullable();
+            $table->text('description')->nullable();
+            $table->string('reference_url')->nullable();
+            $table->date('date');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+            $table->string('location')->nullable();
+            $table->unsignedInteger('category_id')->nullable();
+            $table->timestamps();  // 'created_at' と 'updated_at' カラムを自動的に生成
         });
     }
 

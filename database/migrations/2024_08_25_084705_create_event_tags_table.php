@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('event_tags', function (Blueprint $table) {
-            $table->id();
+            $table->id('event_tag_id');
+            $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('tag_id');
             $table->timestamps();
+
+            // 外部キー制約を設定
+            $table->foreign('event_id')->references('event_id')->on('events')->onDelete('cascade');
+            $table->foreign('tag_id')->references('tag_id')->on('tags')->onDelete('cascade');
         });
     }
 
