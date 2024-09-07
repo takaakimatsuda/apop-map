@@ -9,8 +9,11 @@ class Event extends Model
 {
     use HasFactory;
 
+    // プライマリキーを設定
+    protected $primaryKey = 'event_id';
+
     // マスアサインメントを許可しない属性
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $guarded = ['event_id', 'created_at', 'updated_at'];
 
     // タグとのリレーションシップを定義
     public function tags()

@@ -24,5 +24,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    // プライマリキーを設定
+    protected $primaryKey = 'tag_id';
+
+    // マスアサインメントを許可しない属性
+    protected $guarded = ['tag_id', 'created_at', 'updated_at'];
 }
