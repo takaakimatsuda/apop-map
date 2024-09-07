@@ -25,7 +25,7 @@
                 <tr>
                     <td class="border border-gray-300 px-4 py-2">{{ $tag->name }}</td>
                     <td class="border border-gray-300 px-4 py-2">
-                        <form action="{{ route('tag.destroy', $tag->id) }}" method="POST" onsubmit="return confirm('本当にこのタグを削除しますか？');">
+                        <form action="{{ route('tag.destroy', $tag->tag_id) }}" method="POST" onsubmit="return confirm('本当にこのタグを削除しますか？');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">削除</button>
