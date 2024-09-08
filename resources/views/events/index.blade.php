@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto p-4" style="width: 80%;">
         @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
             <strong class="font-bold">成功！</strong>
@@ -13,27 +13,35 @@
         </div>
         @endif
 
-        <div class="space-y-4 max-w-5xl mx-auto" style="width: 80%;">
+        <!-- 上部のページングリンク -->
+        <div class="text-center mb-4">
+            <p>
+                {{ $events->links() }}
+            </p>
+        </div>
+
+        <!-- イベント一覧を4列グリッドで表示 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             @foreach ($events as $event)
-            <div class="flex items-center border rounded-lg shadow-md p-4 bg-white">
+            <div class="border rounded-lg shadow-md p-4 bg-white">
                 <!-- イベントの画像 -->
-                <div class="flex-shrink-0 w-1/4">
-                    <img src="{{ $event->image_url ?? 'path/to/default_image.png' }}" alt="{{ $event->title }}" class="w-full h-32 object-cover rounded-lg">
+                <div class="mb-4">
+                    <img src="{{ $event->image_url ?? 'path/to/default_image.png' }}" alt="{{ $event->title }}" class="w-full h-48 object-cover rounded-lg">
                 </div>
-                <!-- イベントの詳細情報 -->
-                <div class="ml-4 w-3/4">
-                    <!-- タイトルリンク -->
-                    <a href="{{ route('events.show', $event->event_id) }}" class="text-xl font-bold text-blue-500 hover:text-blue-700">
-                        {{ $event->title }}
-                    </a>
-                    <!-- 日付と場所 -->
-                    <p class="text-sm text-gray-600 mt-1">
-                        {{ $event->date }} @if($event->start_time) {{ $event->start_time }} @endif - {{ $event->end_time }}
-                    </p>
-                    <p class="text-sm text-gray-600 mt-1">{{ $event->venue_name }}</p>
-                </div>
+                <!-- タイトルリンク -->
+                <a href="{{ route('events.show', $event->event_id) }}" class="text-lg font-bold text-blue-500 hover:text-blue-700 block">
+                    {{ $event->title }}
+                </a>
+                <!-- 日付と場所 -->
+                <p class="text-sm text-gray-600 mt-2">{{ $event->date }} {{ $event->start_time }} - {{ $event->end_time }}</p>
+                <p class="text-sm text-gray-600 mt-1">{{ $event->venue_name }}</p>
             </div>
             @endforeach
+        </div>
+
+        <!-- 下部のページングリンク -->
+        <div class="text-center mt-6">
+            {{ $events->links() }}
         </div>
     </div>
 </x-app-layout>
