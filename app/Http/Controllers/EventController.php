@@ -11,7 +11,8 @@ class EventController extends Controller
     // イベント一覧表示
     public function index()
     {
-        $events = Event::with('tags')->get();
+        // 1ページあたり24件のイベントを取得し、ページングを行う
+        $events = Event::with('tags')->paginate(24);
         return view('events.index', compact('events'));
     }
 
