@@ -8,7 +8,7 @@ use App\Models\Event;
 
 class EventListTest extends TestCase
 {
-    use RefreshDatabase; // テストごとにデータベースをリフレッシュ
+    use RefreshDatabase; // このトレイトにより、テストごとにデータベースがリフレッシュされ、マイグレーションが実行されます
 
     /**
      * イベント一覧が正しく表示されるかをテスト
