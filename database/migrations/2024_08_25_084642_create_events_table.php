@@ -23,7 +23,6 @@ return new class extends Migration
             $table->date('date');
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->string('location')->nullable();
             $table->unsignedInteger('category_id')->nullable()->index();  // カテゴリIDにインデックスを設定
             $table->timestamps();  // 'created_at' と 'updated_at' カラムを自動的に生成
         });
