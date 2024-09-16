@@ -13,6 +13,10 @@
         </div>
         @endif
 
+        <!-- イベントが存在しない場合のメッセージ -->
+        @if ($events->isEmpty())
+        <p class="text-center text-gray-600">イベントがありません</p>
+        @else
         <!-- 上部のページングリンク -->
         <div class="text-center mb-4">
             <p>
@@ -30,7 +34,7 @@
                 </div>
                 <!-- タイトルリンク -->
                 <a href="{{ route('events.show', $event->event_id) }}" class="text-lg font-bold text-blue-500 hover:text-blue-700 block">
-                    {{ $event->title }}
+                    {{ trim($event->title) }}
                 </a>
                 <!-- 日付と場所 -->
                 <p class="text-sm text-gray-600 mt-2">{{ $event->date }} {{ $event->start_time }} - {{ $event->end_time }}</p>
@@ -43,5 +47,6 @@
         <div class="text-center mt-6">
             {{ $events->links() }}
         </div>
+        @endif
     </div>
 </x-app-layout>
