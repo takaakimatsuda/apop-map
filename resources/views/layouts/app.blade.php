@@ -14,6 +14,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Page-specific CSS -->
+    @yield('styles')
 </head>
 
 <body class="font-sans antialiased">
