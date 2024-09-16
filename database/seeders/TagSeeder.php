@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Tag;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class TagSeeder extends Seeder
 {
@@ -13,7 +14,16 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        Tag::truncate();
+        // 外部キー制約を一時的に無効化
+        Schema::disableForeignKeyConstraints();
+
+        // 'tags' テーブルのデータを削除
+        Tag::query()->delete();
+
+        // 外部キー制約を再度有効化
+        Schema::enableForeignKeyConstraints();
+
+        // タグデータを挿入
         $now = now();
         Tag::create(['name' => 'アニソン', 'created_at' => $now, 'updated_at' => $now]);
         Tag::create(['name' => 'ボカロ', 'created_at' => $now, 'updated_at' => $now]);
@@ -21,6 +31,7 @@ class TagSeeder extends Seeder
         Tag::create(['name' => 'Vtuber', 'created_at' => $now, 'updated_at' => $now]);
         Tag::create(['name' => 'ゲーソン', 'created_at' => $now, 'updated_at' => $now]);
 
+        // その他のデータをファクトリで生成
         Tag::factory()->count(3)->create();
     }
 }
