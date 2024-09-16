@@ -20,4 +20,9 @@ class Event extends Model
     {
         return $this->belongsToMany(Tag::class, 'event_tags', 'event_id', 'tag_id');
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'event_categories', 'event_id', 'category_id');
+    }
 }

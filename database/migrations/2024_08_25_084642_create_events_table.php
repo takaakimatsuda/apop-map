@@ -20,10 +20,9 @@ return new class extends Migration
             $table->string('venue_address')->nullable();
             $table->text('description')->nullable();
             $table->string('reference_url')->nullable();
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->unsignedInteger('category_id')->nullable()->index();  // カテゴリIDにインデックスを設定
             $table->timestamps();  // 'created_at' と 'updated_at' カラムを自動的に生成
         });
     }

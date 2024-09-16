@@ -17,13 +17,16 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => 'password',
         ]);
 
         // 他のシーダーを呼び出す
         $this->call([
             TagSeeder::class,
             RegionSeeder::class,
-            EventSeeder::class,
+            CategorySeeder::class,
+            EventSeeder::class,  // 100件のイベントを作成
+            EventCategorySeeder::class,  // イベントにランダムにカテゴリーを関連付け
         ]);
     }
 }

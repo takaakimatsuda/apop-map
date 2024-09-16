@@ -27,9 +27,8 @@ class EventSeeder extends Seeder
                 'description' => 'イベントの説明文' . $i,
                 'reference_url' => NULL,
                 'date' => $randomDate,  // ランダムな日付を使用
-                'start_time' => NULL,
-                'end_time' => NULL,
-                'category_id' => NULL,
+                'start_time' => '12:30',
+                'end_time' => '19:00',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

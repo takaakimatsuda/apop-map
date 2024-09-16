@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Tag;
+use App\Models\Region;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -12,7 +14,7 @@ class EventController extends Controller
     public function index()
     {
         // 1ページあたり24件のイベントを取得し、ページングを行う
-        $events = Event::with('tags')->paginate(24);
+        $events = Event::with('tags')->orderBy('updated_at', 'desc')->paginate(24);
         return view('events.index', compact('events'));
     }
 
@@ -20,32 +22,41 @@ class EventController extends Controller
     public function create()
     {
         $tags = Tag::all();
-        return view('events.create', compact('tags'));
+        $regions = Region::all();
+        $categories = Category::all();
+        return view('events.create', compact('tags', 'regions', 'categories'));
     }
 
     // 新しいイベントの保存
     public function store(Request $request)
     {
-        // バリデーション
+        // バリデーションルールの定義
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
+            'title' => 'required|string|max:255',  // イベント名は必須
+            'category_id' => 'required|array',  // カテゴリーは配列で、少なくとも1つ選択されている必要がある
+            'date' => 'nullable|date',  // その他のフィールドは任意
             'start_time' => 'nullable|date_format:H:i',
             'end_time' => 'nullable|date_format:H:i|after:start_time',
             'venue_name' => 'nullable|string|max:255',
             'venue_address' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'reference_url' => 'nullable|url',
+            'region' => 'nullable|exists:regions,region_id',
+        ],[
+            'title.required' => 'イベント名は必須です。',
+            'category_id.required' => 'カテゴリーを選択してください。',
         ]);
 
-        // イベントの作成と保存
-        $event = Event::create($validatedData);
+        // イベントの作成
+        $event = new Event($validatedData);
+        $event->user_id = auth()->id(); // ログインユーザーのIDを設定
+        $event->save();
 
-        // タグの関連付け
-        if ($request->has('tags')) {
-            $event->tags()->sync($request->tags);
-        }
+        // カテゴリーの関連付け
+        $event->categories()->sync($request->category_id);
 
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+        // 成功メッセージと共にイベント一覧にリダイレクト
+        return redirect()->route('events.index')->with('success', 'イベントが正常に作成されました。');
     }
 
     // イベント詳細の表示
