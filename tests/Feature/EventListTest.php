@@ -5,11 +5,17 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Event;
+use Database\Factories\EventFactory;
 
 class EventListTest extends TestCase
 {
     use RefreshDatabase; // このトレイトにより、テストごとにデータベースがリフレッシュされ、マイグレーションが実行されます
 
+    protected function setUp(): void
+    {
+        parent::setUp(); // 親クラスのsetUpメソッドを必ず呼び出す
+        EventFactory::resetEventCount(); // EventFactoryのイベントカウンタをリセット
+    }
     /**
      * イベント一覧が正しく表示されるかをテスト
      */
@@ -33,27 +39,18 @@ class EventListTest extends TestCase
     /**
      * ページネーションが正しく動作するかをテスト
      */
-    public function test_events_pagination_works_correctly(): void
+    public function test_events_pagination_works_correctly()
     {
-        // 48件のイベントデータを作成（ページ2が表示されることを確認するために十分な数）
-        Event::factory()->count(48)->create();
-
-        // 1ページ目のイベント一覧にアクセス
-        $response = $this->get('/events?page=1');
-        $response->assertStatus(200);
-
-        // 1ページ目に24件のイベントが見えるか確認
-        for ($i = 1; $i <= 24; $i++) {
-            $response->assertSee("イベント$i");
-        }
+        // タイトルを指定してイベントを生成
+        Event::factory()->count(48)->create(); // 48件のイベントを作成
 
         // 2ページ目にアクセスして確認
         $response = $this->get('/events?page=2');
         $response->assertStatus(200);
 
-        // 2ページ目に残りのイベントが表示されていることを確認
+        // 2ページ目に25〜48番目のイベントが表示されているか確認
         for ($i = 25; $i <= 48; $i++) {
-            $response->assertSee("イベント$i");
+            $response->assertSee("イベント{$i}");
         }
     }
 

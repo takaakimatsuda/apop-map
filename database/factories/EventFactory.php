@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class EventFactory extends Factory
 {
     protected $model = Event::class;
+    protected static $eventCount = 1; // staticを追加してクラス変数として定義
 
     /**
      * Define the model's default state.
@@ -19,9 +20,10 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+        $title = "イベント" . self::$eventCount++;
         return [
-            'title' => $this->faker->sentence,
-            'user_id' => 1,  // 必要に応じて関連するユーザーIDを指定
+            'title' => $title,
+            'user_id' => 1,
             'image_url' => $this->faker->imageUrl(),
             'dance_genre' => 'Hip-hop',
             'region' => 'Tokyo',
@@ -32,8 +34,13 @@ class EventFactory extends Factory
             'date' => $this->faker->date,
             'start_time' => $this->faker->time,
             'end_time' => $this->faker->time,
-            'location' => $this->faker->address,  // 会場名などに適したランダムなアドレス情報
-            'category_id' => 1,  // 必要に応じてカテゴリIDを指定
+            'location' => $this->faker->address,
+            'category_id' => 1,
         ];
+    }
+
+    public static function resetEventCount() // リセットメソッドを追加
+    {
+        self::$eventCount = 1;
     }
 }
