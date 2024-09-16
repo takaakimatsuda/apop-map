@@ -16,8 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('image_url')->nullable();
-            $table->string('dance_genre')->nullable();
-            $table->string('region')->nullable();
             $table->string('venue_name')->nullable();
             $table->string('venue_address')->nullable();
             $table->text('description')->nullable();
@@ -26,7 +24,7 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->string('location')->nullable();
-            $table->unsignedInteger('category_id')->nullable();
+            $table->unsignedInteger('category_id')->nullable()->index();  // カテゴリIDにインデックスを設定
             $table->timestamps();  // 'created_at' と 'updated_at' カラムを自動的に生成
         });
     }
