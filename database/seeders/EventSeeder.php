@@ -29,6 +29,7 @@ class EventSeeder extends Seeder
                 'date' => $randomDate,  // ランダムな日付を使用
                 'start_time' => '12:30',
                 'end_time' => '19:00',
+                'region_id' => rand(1, 47),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
+            $table->unsignedBigInteger('region_id')->nullable();
             $table->timestamps();  // 'created_at' と 'updated_at' カラムを自動的に生成
         });
     }
