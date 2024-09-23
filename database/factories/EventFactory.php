@@ -25,8 +25,7 @@ class EventFactory extends Factory
             'title' => $title,
             'user_id' => 1,
             'image_url' => $this->faker->imageUrl(),
-            'dance_genre' => 'Hip-hop',
-            'region' => 'Tokyo',
+            'region_id' => 1,
             'venue_name' => $this->faker->company,
             'venue_address' => $this->faker->address,
             'description' => $this->faker->paragraph,
@@ -34,8 +33,6 @@ class EventFactory extends Factory
             'date' => $this->faker->date,
             'start_time' => $this->faker->time,
             'end_time' => $this->faker->time,
-            'location' => $this->faker->address,
-            'category_id' => 1,
         ];
     }
 

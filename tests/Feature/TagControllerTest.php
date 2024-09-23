@@ -55,7 +55,8 @@ class TagControllerTest extends TestCase
 
         $tag = \App\Models\Tag::factory()->create(['name' => 'Tag to be deleted']);
 
-        $response = $this->delete(route('tag.destroy', $tag->id));
+        // ここでモデルオブジェクトを直接渡す
+        $response = $this->delete(route('tag.destroy', $tag));
 
         $response->assertSessionHasNoErrors();
         $response->assertStatus(302);
@@ -67,7 +68,7 @@ class TagControllerTest extends TestCase
         $user = \App\Models\User::factory()->create();
         $this->actingAs($user);
 
-        $tag = \App\Models\Tag::factory()->create(['name' => 'Viewable Tag']);
+        \App\Models\Tag::factory()->create(['name' => 'Viewable Tag']);
 
         $response = $this->get(route('tag.index'));
 

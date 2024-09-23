@@ -29,4 +29,20 @@ class Tag extends Model
 
     // マスアサインメントを許可しない属性
     protected $guarded = ['tag_id', 'created_at', 'updated_at'];
+
+    // イベントとの多対多の関係を定義
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_tags', 'tag_id', 'event_id')->withTimestamps();
+    }
+
+    // タグが削除されたとき、中間テーブルの関連レコードも削除
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($tag) {
+            $tag->events()->detach(); // 関連するイベントとの紐付けを解除
+        });
+    }
 }

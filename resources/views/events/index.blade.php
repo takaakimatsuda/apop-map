@@ -13,6 +13,44 @@
         </div>
         @endif
 
+        <!-- 検索フォーム -->
+        <div class="container mx-auto p-4" style="width: 80%;">
+            <div class="p-4 border border-gray-300 rounded-lg shadow">
+                <form action="{{ route('events.index') }}" method="GET" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- イベント名 -->
+                        <div>
+                            <label for="search" class="block font-medium text-gray-700">イベント名:</label>
+                            <input type="text" id="search" name="search" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        </div>
+
+                        <!-- 開催日範囲 -->
+                        <div>
+                            <label for="from_date" class="block font-medium text-gray-700">開催日:</label>
+                            <input type="date" id="from_date" name="from_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="date" id="to_date" name="to_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        </div>
+
+                        <!-- 地域 -->
+                        <div>
+                            <label for="region" class="block font-medium text-gray-700">地域:</label>
+                            <select id="region" name="region" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <option value="">すべての地域</option>
+                                @foreach ($regions as $region)
+                                <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 検索ボタン -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">検索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- イベントが存在しない場合のメッセージ -->
         @if ($events->isEmpty())
         <p class="text-center text-gray-600">イベントがありません</p>

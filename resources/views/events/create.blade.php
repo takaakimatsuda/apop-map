@@ -47,7 +47,7 @@
                     <select id="region" name="region" class="form-select block w-full text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500">
                         <option value="">未設定</option> <!-- 未設定オプションの追加 -->
                         @foreach ($regions as $region)
-                        <option value="{{ $region->id }}">{{ $region->name }}</option>
+                        <option value="{{ $region->region_id }}">{{ $region->name }}</option> <!-- region_idに修正 -->
                         @endforeach
                     </select>
                 </div>

@@ -13,9 +13,12 @@ class EventController extends Controller
     // イベント一覧表示
     public function index()
     {
+        $tags = Tag::all();
+        $regions = Region::all();
+        $categories = Category::all();
         // 1ページあたり24件のイベントを取得し、ページングを行う
         $events = Event::with('tags')->orderBy('updated_at', 'desc')->paginate(24);
-        return view('events.index', compact('events'));
+        return view('events.index', compact('events', 'tags', 'regions', 'categories'));
     }
 
     // イベント作成フォームの表示
@@ -30,10 +33,10 @@ class EventController extends Controller
     // 新しいイベントの保存
     public function store(Request $request)
     {
-        // バリデーションルールの定義
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',  // イベント名は必須
-            'category_id' => 'required|array',  // カテゴリーは配列で、少なくとも1つ選択されている必要がある
+            // バリデーションルールの定義
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',  // イベント名は必須
+                'category_id' => 'required|array',  // カテゴリーは配列で、少なくとも1つ選択されている必要がある
             'date' => 'nullable|date',  // その他のフィールドは任意
             'start_time' => 'nullable|date_format:H:i',
             'end_time' => 'nullable|date_format:H:i|after:start_time',
@@ -41,7 +44,7 @@ class EventController extends Controller
             'venue_address' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'reference_url' => 'nullable|url',
-            'region' => 'nullable|exists:regions,region_id',
+            'region_id' => 'nullable|exists:regions,region_id',
         ],[
             'title.required' => 'イベント名は必須です。',
             'category_id.required' => 'カテゴリーを選択してください。',
