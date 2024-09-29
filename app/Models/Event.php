@@ -25,4 +25,9 @@ class Event extends Model
     {
         return $this->belongsToMany(Category::class, 'event_categories', 'event_id', 'category_id');
     }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'region_id');
+    }
 }
