@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('tag', TagController::class);
+    Route::get('/my-events', [EventController::class, 'myEvents'])->name('events.my'); // 自分のイベント管理ページ
     Route::get('events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('events', [EventController::class, 'store'])->name('events.store');
     Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');

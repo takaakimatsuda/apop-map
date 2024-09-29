@@ -166,6 +166,14 @@ class EventController extends Controller
         $event->tags()->detach();
         $event->delete();
 
-        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+        return redirect()->route('events.my')->with('success', 'イベントが正常に削除されました。');
+    }
+
+    public function myEvents()
+    {
+        // ログインユーザーのイベントのみを取得
+        $user = auth()->user();
+        $events = $user->events()->with('categories', 'tags', 'region')->paginate(24);  // 必要なリレーションをロード
+        return view('events.my_events', compact('events'));
     }
 }
