@@ -43,8 +43,8 @@
 
                 <!-- 地域選択 -->
                 <div class="col-span-1 w-1/4">
-                    <label for="region" class="block mb-2 text-sm font-bold text-gray-900">地域:</label>
-                    <select id="region" name="region" class="form-select block w-full text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    <label for="region_id" class="block mb-2 text-sm font-bold text-gray-900">地域:</label>
+                    <select id="region_id" name="region_id" class="form-select block w-full text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500">
                         <option value="">未設定</option> <!-- 未設定オプションの追加 -->
                         @foreach ($regions as $region)
                         <option value="{{ $region->region_id }}">{{ $region->name }}</option> <!-- region_idに修正 -->

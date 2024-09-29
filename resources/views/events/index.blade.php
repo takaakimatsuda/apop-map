@@ -69,7 +69,13 @@
             <a href="{{ route('events.show', $event->event_id) }}" class="border rounded-lg shadow-md p-4 bg-white block hover:bg-gray-100 transition duration-200">
                 <!-- イベントの画像 -->
                 <div class="mb-4">
-                    <img src="{{ $event->image_url ?? 'path/to/default_image.png' }}" alt="{{ $event->title }}" class="w-full h-72 object-contain rounded-lg"> <!-- 画像の高さを48に設定 -->
+                    @if ($event->image_url)
+                    <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="w-full h-72 object-contain rounded-lg">
+                    @else
+                    <div class="w-full h-72 flex items-center justify-center bg-gray-200 rounded-lg">
+                        <p class="text-gray-500">NO EVENT IMAGE</p>
+                    </div>
+                    @endif
                 </div>
                 <!-- タイトル -->
                 <h3 class="text-lg font-bold text-blue-500 hover:text-blue-700">{{ trim($event->title) }}</h3>

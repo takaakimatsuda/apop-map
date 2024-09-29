@@ -6,7 +6,6 @@
     <div class="container mx-auto p-4" style="width: 50%;">
         <!-- フライヤー画像 -->
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">フライヤー画像:</label>
             @if ($event->image_url)
             <!-- リサイズされた画像を表示 -->
             <img src="{{ $event->image_url }}" alt="Event Image" class="w-128 h-auto object-contain mx-auto">
@@ -15,23 +14,16 @@
             @endif
         </div>
 
-        <!-- カテゴリー表示 -->
-        <div class="mb-6">
-            <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">カテゴリー:</label>
-            <div>
-                @forelse ($event->categories as $category)
-                <span>{{ $category->name }}</span>{{ !$loop->last ? '・' : '' }}
-                @empty
-                <p>カテゴリーが設定されていません</p>
-                @endforelse
-            </div>
-        </div>
-
         <!-- イベント情報表示 -->
         <div class="grid grid-cols-1 gap-6">
             <div class="col-span-1">
                 <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">イベント名:</label>
                 <p class="">{{ $event->title }}</p>
+            </div>
+
+            <div class="col-span-1">
+                <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">説明:</label>
+                <p class="">{{ $event->description ?? '' }}</p>
             </div>
 
             <!-- 地域表示 -->
@@ -65,11 +57,6 @@
             <div class="col-span-1">
                 <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">会場住所:</label>
                 <p class="">{{ $event->venue_address ?? '' }}</p>
-            </div>
-
-            <div class="col-span-1">
-                <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">説明:</label>
-                <p class="">{{ $event->description ?? '' }}</p>
             </div>
 
             <div class="col-span-1">
