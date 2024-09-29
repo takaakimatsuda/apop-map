@@ -8,3 +8,14 @@
   max-height: 400px;
   /* 画像の最大高さを制限 */
 }
+
+.label-with-border {
+  border-top: 1px solid #ccc;
+  /* 上の枠線 */
+  border-bottom: 1px solid #ccc;
+  /* 下の枠線 */
+  padding: 10px 0;
+  /* ラベルのテキストと枠線の間のパディング */
+  margin-bottom: 20px;
+  /* 次の要素との間隔 */
+}
