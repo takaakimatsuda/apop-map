@@ -62,22 +62,21 @@
             </p>
         </div>
 
-        <!-- イベント一覧を4列グリッドで表示 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- イベント一覧を3列グリッドで表示 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             @foreach ($events as $event)
-            <div class="border rounded-lg shadow-md p-4 bg-white">
+            <!-- カード全体をリンクで囲む -->
+            <a href="{{ route('events.show', $event->event_id) }}" class="border rounded-lg shadow-md p-4 bg-white block hover:bg-gray-100 transition duration-200">
                 <!-- イベントの画像 -->
                 <div class="mb-4">
-                    <img src="{{ $event->image_url ?? 'path/to/default_image.png' }}" alt="{{ $event->title }}" class="w-full h-48 object-cover rounded-lg">
+                    <img src="{{ $event->image_url ?? 'path/to/default_image.png' }}" alt="{{ $event->title }}" class="w-full h-72 object-contain rounded-lg"> <!-- 画像の高さを48に設定 -->
                 </div>
-                <!-- タイトルリンク -->
-                <a href="{{ route('events.show', $event->event_id) }}" class="text-lg font-bold text-blue-500 hover:text-blue-700 block">
-                    {{ trim($event->title) }}
-                </a>
+                <!-- タイトル -->
+                <h3 class="text-lg font-bold text-blue-500 hover:text-blue-700">{{ trim($event->title) }}</h3>
                 <!-- 日付と場所 -->
                 <p class="text-sm text-gray-600 mt-2">{{ $event->date }} {{ $event->start_time }} - {{ $event->end_time }}</p>
                 <p class="text-sm text-gray-600 mt-1">{{ $event->venue_name }}</p>
-            </div>
+            </a>
             @endforeach
         </div>
 

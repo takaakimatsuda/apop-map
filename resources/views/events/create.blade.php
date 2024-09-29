@@ -7,8 +7,8 @@
             @csrf
             <!-- 画像アップロード -->
             <div class="mb-6">
-                <label for="image_url" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">イベント画像:</label>
-                <input type="file" id="image_url" name="image_url" onchange="previewImage();">
+                <label for="image" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">イベント画像:</label>
+                <input type="file" id="image" name="image" onchange="previewImage(event);" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
                 <!-- ここに画像がプレビューされます -->
                 <img id="image_preview" src="" alt="Image Preview" class="hidden mt-4 w-full h-auto">
             </div>
@@ -96,7 +96,7 @@
         </form>
         <script>
             function previewImage() {
-                const input = document.getElementById('image_url');
+                const input = document.getElementById('image');
                 const preview = document.getElementById('image_preview');
 
                 if (input.files && input.files[0]) {
