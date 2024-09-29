@@ -13,6 +13,12 @@ class EventRegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        \DB::table('event_categories')->truncate();
+    }
 
     public function test_it_can_register_a_event()
     {
@@ -56,7 +62,6 @@ class EventRegistrationTest extends TestCase
 
         // 中間テーブルにカテゴリの関連付けを確認
         $event = Event::where('title', 'テストイベント')->first();
-        $event->categories()->attach($category1->category_id); // ここで関連付けを行う
 
         // リダイレクトされることを確認
         $response->assertRedirect(route('events.index'));
