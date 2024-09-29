@@ -19,17 +19,18 @@ class EventSeeder extends Seeder
 
             DB::table('events')->insert([
                 'event_id' => $i,
-                'user_id' => rand(1, 30),  // 全て同じユーザーとして挿入する場合
+                'user_id' => rand(1, 30),
                 'title' => 'イベント' . $i,
                 'image_url' => NULL,
                 'venue_name' => '会場' . $i,
                 'venue_address' => '会場の住所' . $i,
                 'description' => 'イベントの説明文' . $i,
                 'reference_url' => NULL,
-                'date' => $randomDate,  // ランダムな日付を使用
+                'date' => $randomDate,
                 'start_time' => '12:30',
                 'end_time' => '19:00',
                 'region_id' => rand(1, 47),
+                'visibility' => rand(0, 2),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

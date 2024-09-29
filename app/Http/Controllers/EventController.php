@@ -18,8 +18,21 @@ class EventController extends Controller
         $tags = Tag::all();
         $regions = Region::all();
         $categories = Category::all();
-        // 1ページあたり24件のイベントを取得し、ページングを行う
-        $events = Event::with('tags')->orderBy('updated_at', 'desc')->paginate(24);
+
+        // ログインしている場合は登録ユーザーのみのイベントも表示、していない場合は全公開のみ
+        $events = Event::with('tags')
+            ->where(function ($query) {
+                if (auth()->check()) {
+                    // ログイン済みユーザーは visibility >= 1 のイベントを表示
+                    $query->where('visibility', '>=', 1);
+                } else {
+                    // 未ログインユーザーは visibility = 2 (全公開) のイベントのみ表示
+                    $query->where('visibility', 2);
+                }
+            })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(24);
+
         return view('events.index', compact('events', 'tags', 'regions', 'categories'));
     }
 

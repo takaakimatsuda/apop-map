@@ -30,4 +30,9 @@ class Event extends Model
     {
         return $this->belongsTo(Region::class, 'region_id');
     }
+
+    public function scopeVisible($query, $visibilityLevel = 2)
+    {
+        return $query->where('visibility', '>=', $visibilityLevel);
+    }
 }

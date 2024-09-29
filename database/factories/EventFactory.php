@@ -30,6 +30,7 @@ class EventFactory extends Factory
             'venue_address' => $this->faker->address,
             'description' => $this->faker->paragraph,
             'reference_url' => $this->faker->url,
+            'visibility' => 2,
             'date' => $this->faker->date,
             'start_time' => $this->faker->time,
             'end_time' => $this->faker->time,

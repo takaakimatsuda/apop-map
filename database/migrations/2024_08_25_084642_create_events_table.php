@@ -24,6 +24,7 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
+            $table->tinyInteger('visibility')->default(0);  // 公開状態 (0: 下書き, 1: 登録ユーザーのみ, 2: 全公開)
             $table->timestamps();  // 'created_at' と 'updated_at' カラムを自動的に生成
         });
     }
