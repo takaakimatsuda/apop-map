@@ -44,7 +44,17 @@
                         @endif
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold">{{ $event->title }}</h3>
+                        <h3 class="text-lg font-bold">
+                            {{ $event->title }}
+                            <span class="text-sm text-gray-400">
+                                開催日:
+                                @if ($event->date)
+                                {{ $event->date->format('Y-m-d') }}
+                                @else
+                                未設定
+                                @endif
+                            </span>
+                        </h3>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
