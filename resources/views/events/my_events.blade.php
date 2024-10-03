@@ -26,21 +26,21 @@
             @foreach ($events as $event)
             <div class="flex justify-between items-center border-b border-gray-300 py-4">
                 <div class="flex items-center">
-                    <div class="mr-4">
-                        <!-- 公開状態のラベルを明確に表示 -->
+                    <!-- 公開状態のラベルを明確に表示 -->
+                    <div class="mr-4 flex items-center justify-center" style="width: 80px;">
                         @if ($event->visibility == 0)
-                        <span style="background-color: red; color: white; padding: 2px 8px; border-radius: 5px; font-size: 14px;">下書き</span>
+                        <span style="background-color: gray; color: white; padding: 2px 8px; border-radius: 5px; font-size: 14px;">下書き</span>
                         @elseif ($event->visibility == 1)
-                        <span style="background-color: yellow; color: black; padding: 2px 8px; border-radius: 5px; font-size: 14px;">ユーザー</span>
+                        <span style="background-color: green; color: white; padding: 2px 8px; border-radius: 5px; font-size: 14px;">仮登録</span>
                         @else
-                        <span style="background-color: green; color: white; padding: 2px 8px; border-radius: 5px; font-size: 14px;">全公開</span>
+                        <span style="background-color: red; color: white; padding: 2px 8px; border-radius: 5px; font-size: 14px;">全公開</span>
                         @endif
                     </div>
                     <div class="w-16 h-16 bg-gray-200 flex items-center justify-center rounded mr-4">
                         @if ($event->image_url)
                         <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="w-full h-full object-cover rounded">
                         @else
-                        <span class="text-gray-500">No Image</span>
+                        <span class="text-gray-500 text-center">No Image</span>
                         @endif
                     </div>
                     <div>
