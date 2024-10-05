@@ -107,7 +107,10 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $tags = Tag::all();
-        return view('events.edit', compact('event', 'tags'));
+        $regions = Region::all();  // 地域情報を取得
+        $categories = Category::all();  // カテゴリも取得する場合
+
+        return view('events.edit', compact('event', 'tags', 'regions', 'categories'));
     }
 
     // イベントの更新
@@ -115,30 +118,30 @@ class EventController extends Controller
     {
         // バリデーションルールの定義
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',  // イベント名は必須
-            'category_id' => 'required|array',  // カテゴリーは配列で、少なくとも1つ選択されている必要がある
-            'date' => 'nullable|date',  // その他のフィールドは任意
-            'start_time' => 'nullable|date_format:H:i',
-            'end_time' => 'nullable|date_format:H:i|after:start_time',
-            'venue_name' => 'nullable|string|max:255',
-            'venue_address' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'reference_url' => 'nullable|url',
-            'region_id' => 'nullable|exists:regions,region_id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 画像のバリデーション追加
-        ], [
-            'title.required' => 'イベント名は必須です。',
-            'category_id.required' => 'カテゴリーを選択してください。',
-        ]);
+                'title' => 'required|string|max:255',
+                'category_id' => 'required|array',
+                'date' => 'nullable|date',
+                'start_time' => 'nullable|date_format:H:i:s',
+                'end_time' => 'nullable|date_format:H:i:s',
+                'venue_name' => 'nullable|string|max:255',
+                'venue_address' => 'nullable|string|max:255',
+                'description' => 'nullable|string',
+                'reference_url' => 'nullable|url',
+                'region_id' => 'nullable|exists:regions,region_id',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'visibility' => 'required|integer|in:0,1,2',
+            ], [
+                'title.required' => 'イベント名は必須です。',
+                'category_id.required' => 'カテゴリーを選択してください。',
+            ]);
 
         // イベントの更新
         $event->update($validatedData);
 
         // 画像ファイルがある場合、S3にアップロード
         if ($request->hasFile('image')) {
-            // 既存の画像がある場合は削除
+            // 既存の画像を削除
             if ($event->image_url) {
-                // S3のURLからパスを抽出
                 $parsedUrl = parse_url($event->image_url);
                 $path = ltrim($parsedUrl['path'], '/');
                 Storage::disk('s3')->delete($path);
@@ -146,7 +149,6 @@ class EventController extends Controller
 
             // 新しい画像をアップロード
             $imagePath = $request->file('image')->store('events', 's3');
-            // 画像のURLを取得して image_url カラムに保存
             $event->image_url = Storage::disk('s3')->url($imagePath);
         }
 
@@ -157,7 +159,13 @@ class EventController extends Controller
             $event->tags()->sync($request->tags);
         }
 
-        return redirect()->route('events.index')->with('success', 'イベントが正常に更新されました。');
+        // カテゴリーの更新
+        if ($request->has('category_id')) {
+            $event->categories()->sync($request->category_id);
+        }
+
+        // 更新後にイベント管理画面にリダイレクト
+        return redirect()->route('events.my')->with('success', 'イベントが正常に更新されました。');
     }
 
     // イベントの削除
