@@ -11,6 +11,9 @@ class Event extends Model
 
     // プライマリキーを設定
     protected $primaryKey = 'event_id';
+    protected $casts = [
+        'date' => 'date',  // 'date' フィールドを自動的に Carbon インスタンスにキャスト
+    ];
 
     // マスアサインメントを許可しない属性
     protected $guarded = ['event_id', 'created_at', 'updated_at'];
