@@ -49,7 +49,7 @@
                             <span class="text-sm text-gray-400">
                                 開催日:
                                 @if ($event->date)
-                                {{ $event->date->format('Y-m-d') }}
+                                {{ $event->date->format('Y-m-d') }} <!-- 自動キャストにより、format() が直接使用可能 -->
                                 @else
                                 未設定
                                 @endif
