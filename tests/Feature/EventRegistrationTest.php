@@ -48,6 +48,7 @@ class EventRegistrationTest extends TestCase
             'venue_address' => 'テスト住所',
             'description' => 'テスト説明文',
             'reference_url' => 'http://example.com',
+            'visibility' => 2,
         ];
 
         // POSTリクエストを送信

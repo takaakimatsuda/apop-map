@@ -89,6 +89,24 @@
                     <input type="url" id="reference_url" name="reference_url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
 
+                <!-- 公開範囲の選択 -->
+                <div class="mb-6 mt-4">
+                    <label for="visibility" class="block mb-2 text-sm font-bold text-gray-900">公開範囲:</label>
+                    <div class="flex items-center">
+                        <input type="radio" id="draft" name="visibility" value="0" class="mr-2">
+                        <label for="draft" class="mr-4">下書き</label>
+
+                        <input type="radio" id="pending" name="visibility" value="1" class="mr-2">
+                        <label for="pending" class="mr-4">仮登録</label>
+
+                        <input type="radio" id="public" name="visibility" value="2" class="mr-2">
+                        <label for="public">全公開</label>
+                    </div>
+                    @error('visibility')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div class="col-span-1">
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">イベントを登録する</button>
                 </div>

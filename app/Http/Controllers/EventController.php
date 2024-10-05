@@ -48,19 +48,21 @@ class EventController extends Controller
     // 新しいイベントの保存
     public function store(Request $request)
     {
+        \Log::info('イベント登録リクエスト:', $request->all());
             // バリデーションルールの定義
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',  // イベント名は必須
                 'category_id' => 'required|array',  // カテゴリーは配列で、少なくとも1つ選択されている必要がある
             'date' => 'nullable|date',  // その他のフィールドは任意
             'start_time' => 'nullable|date_format:H:i',
-            'end_time' => 'nullable|date_format:H:i|after:start_time',
+            'end_time' => 'nullable|date_format:H:i',
             'venue_name' => 'nullable|string|max:255',
             'venue_address' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'reference_url' => 'nullable|url',
             'region_id' => 'nullable|exists:regions,region_id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 画像のバリデーション追加
+            'visibility' => 'required|integer|in:0,1,2',
         ],[
             'title.required' => 'イベント名は必須です。',
             'category_id.required' => 'カテゴリーを選択してください。',
