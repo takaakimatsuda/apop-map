@@ -116,6 +116,8 @@ class EventController extends Controller
     // イベントの更新
     public function update(Request $request, Event $event)
     {
+        // デバッグ用に渡されたデータを確認
+        \Log::info('更新データ: ', $request->all());
         // バリデーションルールの定義
         $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
@@ -136,7 +138,7 @@ class EventController extends Controller
             ]);
 
         // イベントの更新
-        $event->update($validatedData);
+        $event->fill($validatedData);
 
         // 画像ファイルがある場合、S3にアップロード
         if ($request->hasFile('image')) {
@@ -153,6 +155,9 @@ class EventController extends Controller
         }
 
         $event->save();
+
+        // 保存後のイベントデータをデバッグログに出力
+        \Log::info('保存後のイベントデータ: ', $event->toArray());
 
         // タグの更新
         if ($request->has('tags')) {
