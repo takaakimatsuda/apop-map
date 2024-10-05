@@ -15,7 +15,7 @@
 
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-bold">イベント管理</h2>
-            <a href="{{ route('events.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">イベントを作成する</a>
+            <a href="{{ route('events.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">新規作成</a>
         </div>
 
         @if ($events->isEmpty())

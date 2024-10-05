@@ -171,9 +171,14 @@ class EventController extends Controller
 
     public function myEvents()
     {
-        // ログインユーザーのイベントのみを取得
+        // ログインユーザーのイベントのみを取得し、updated_atで降順に並べ替え
         $user = auth()->user();
-        $events = $user->events()->with('categories', 'tags', 'region')->paginate(24);  // 必要なリレーションをロード
+        $events = $user->events()
+            ->with('categories', 'tags', 'region')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(12);
+
         return view('events.my_events', compact('events'));
     }
+
 }
