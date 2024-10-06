@@ -106,13 +106,13 @@
                 <div class="mb-6 mt-4">
                     <label for="visibility" class="block mb-2 text-sm font-bold text-gray-900">公開範囲:</label>
                     <div class="flex items-center">
-                        <input type="radio" id="draft" name="visibility" value="0" class="mr-2">
+                        <input type="radio" id="draft" name="visibility" value="0" class="mr-2" {{ old('visibility', 0) == 0 ? 'checked' : '' }}>
                         <label for="draft" class="mr-4">下書き</label>
 
-                        <input type="radio" id="pending" name="visibility" value="1" class="mr-2">
+                        <input type="radio" id="pending" name="visibility" value="1" class="mr-2" {{ old('visibility') == 1 ? 'checked' : '' }}>
                         <label for="pending" class="mr-4">仮登録</label>
 
-                        <input type="radio" id="public" name="visibility" value="2" class="mr-2">
+                        <input type="radio" id="public" name="visibility" value="2" class="mr-2" {{ old('visibility') == 2 ? 'checked' : '' }}>
                         <label for="public">全公開</label>
                     </div>
                     @error('visibility')
