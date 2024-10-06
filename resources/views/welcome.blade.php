@@ -29,8 +29,12 @@
     @endphp
 
     @foreach ($categories as $categoryId => $categoryName)
-    <section class="mb-12  p-4 max-w-7xl mx-auto">
+    <section class="mb-12 p-4 max-w-7xl mx-auto">
         <h2 class="text-2xl font-bold mb-4">{{ $categoryName }}</h2>
+
+        @if ($eventsByCategory[$categoryId]->isEmpty())
+        <p class="text-center text-gray-500">該当するイベントがありません。</p>
+        @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($eventsByCategory[$categoryId] as $event)
             <a href="{{ route('events.show', $event->event_id) }}" class="border rounded-lg shadow-md p-4 bg-white block hover:shadow-lg transition-shadow duration-200">
@@ -62,6 +66,8 @@
             </a>
             @endforeach
         </div>
+        @endif
+
         <!-- 他のカテゴリーも調べるボタン -->
         <div class="mt-6 text-center">
             <a href="{{ route('events.index', ['category_id' => $categoryId]) }}" class="px-6 py-2 bg-lime-500 text-white rounded-lg hover:bg-lime-600">
