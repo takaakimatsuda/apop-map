@@ -12,11 +12,54 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
+    public function welcome()
+    {
+        $today = now()->format('Y-m-d');
+
+        // カテゴリーごとのイベント取得
+        $battleEvents = Event::whereHas('categories', function ($query) {
+            $query->where('categories.category_id', 1);
+        })
+        ->where('date', '>=', now())
+        ->orderBy('date', 'asc')
+        ->limit(6)
+        ->get();
+
+        $djEvents = Event::whereHas('categories', function ($query) {
+            $query->where('categories.category_id', 2);
+        })
+        ->where('date', '>=', now())
+        ->orderBy('date', 'asc')
+        ->limit(6)
+        ->get();
+
+        $practiceEvents = Event::whereHas('categories', function ($query) {
+            $query->where('categories.category_id', 3);
+        })
+        ->where('date', '>=', now())
+        ->orderBy('date', 'asc')
+        ->limit(6)
+        ->get();
+
+        $wsEvents = Event::whereHas('categories', function ($query) {
+            $query->where('categories.category_id', 4);
+        })
+        ->where('date', '>=', now())
+        ->orderBy('date', 'asc')
+        ->limit(6)
+        ->get();
+
+        return view('welcome', compact('battleEvents', 'djEvents', 'practiceEvents', 'wsEvents'));
+    }
+
     public function index(Request $request)
     {
         $tags = Tag::all();
         $regions = Region::all();
         $categories = Category::all();
+
+        // 現在選択されたカテゴリIDを保持
+        $selectedCategoryId = $request->input('category_id') ?? $request->input('category');
 
         // イベント一覧クエリの初期化
         $query = Event::with('tags')
@@ -46,9 +89,9 @@ class EventController extends Controller
         }
 
         // カテゴリでの検索
-        if ($request->filled('category')) {
-            $query->whereHas('categories', function ($q) use ($request) {
-                $q->where('categories.category_id', $request->category);
+        if ($selectedCategoryId) {
+            $query->whereHas('categories', function ($q) use ($selectedCategoryId) {
+                $q->where('categories.category_id', $selectedCategoryId);
             });
         }
 
@@ -62,8 +105,10 @@ class EventController extends Controller
         // 結果の取得
         $events = $query->orderBy('updated_at', 'desc')->paginate(24);
 
-        return view('events.index', compact('events', 'tags', 'regions', 'categories'));
+        return view('events.index', compact('events', 'tags', 'regions', 'categories', 'selectedCategoryId'));
     }
+
+
 
     // イベント作成フォームの表示
     public function create()

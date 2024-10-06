@@ -5,9 +5,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [EventController::class, 'welcome'])->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

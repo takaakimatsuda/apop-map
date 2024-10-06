@@ -52,7 +52,10 @@
                             <select id="category" name="category" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                                 <option value="">すべてのカテゴリ</option>
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->category_id }}" {{ request()->input('category') == $category->category_id ? 'selected' : '' }}>
+                                <option value="{{ $category->category_id }}"
+                                    @if (request()->input('category') == $category->category_id || (isset($selectedCategoryId) && $selectedCategoryId == $category->category_id))
+                                    selected
+                                    @endif>
                                     {{ $category->name }}
                                 </option>
                                 @endforeach
