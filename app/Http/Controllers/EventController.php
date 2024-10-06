@@ -20,6 +20,7 @@ class EventController extends Controller
         $battleEvents = Event::whereHas('categories', function ($query) {
             $query->where('categories.category_id', 1);
         })
+        ->where('visibility', 2) // 公開イベントのみ
         ->where('date', '>=', now())
         ->orderBy('date', 'asc')
         ->limit(6)
@@ -28,6 +29,7 @@ class EventController extends Controller
         $djEvents = Event::whereHas('categories', function ($query) {
             $query->where('categories.category_id', 2);
         })
+        ->where('visibility', 2)
         ->where('date', '>=', now())
         ->orderBy('date', 'asc')
         ->limit(6)
@@ -36,6 +38,7 @@ class EventController extends Controller
         $practiceEvents = Event::whereHas('categories', function ($query) {
             $query->where('categories.category_id', 3);
         })
+        ->where('visibility', 2)
         ->where('date', '>=', now())
         ->orderBy('date', 'asc')
         ->limit(6)
@@ -44,6 +47,7 @@ class EventController extends Controller
         $wsEvents = Event::whereHas('categories', function ($query) {
             $query->where('categories.category_id', 4);
         })
+        ->where('visibility', 2)
         ->where('date', '>=', now())
         ->orderBy('date', 'asc')
         ->limit(6)
