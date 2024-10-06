@@ -64,6 +64,20 @@
                 <a href="{{ $event->reference_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">{{ $event->reference_url ?? '' }}</a>
             </div>
 
+            <!-- タグ名表示 -->
+            <div class="col-span-1">
+                <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">タグ:</label>
+                <p class="">
+                    @if($event->tags && $event->tags->count() > 0)
+                    @foreach($event->tags as $tag)
+                    {{ $tag->name }}@if(!$loop->last), @endif
+                    @endforeach
+                    @else
+                    タグが設定されていません
+                    @endif
+                </p>
+            </div>
+
             <div class="col-span-1">
                 <a href="{{ route('events.index') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">戻る</a>
             </div>
