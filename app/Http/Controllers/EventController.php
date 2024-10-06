@@ -12,26 +12,58 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
-    // イベント一覧表示
-    public function index()
+    public function index(Request $request)
     {
         $tags = Tag::all();
         $regions = Region::all();
         $categories = Category::all();
 
-        // ログインしている場合は登録ユーザーのみのイベントも表示、していない場合は全公開のみ
-        $events = Event::with('tags')
-            ->where(function ($query) {
-                if (auth()->check()) {
-                    // ログイン済みユーザーは visibility >= 1 のイベントを表示
-                    $query->where('visibility', '>=', 1);
-                } else {
-                    // 未ログインユーザーは visibility = 2 (全公開) のイベントのみ表示
-                    $query->where('visibility', 2);
-                }
-            })
-            ->orderBy('updated_at', 'desc')
-            ->paginate(24);
+        // イベント一覧クエリの初期化
+        $query = Event::with('tags')
+        ->where(function ($query) {
+            if (auth()->check()) {
+                // ログイン済みユーザーは visibility >= 1 のイベントを表示
+                $query->where('visibility', '>=', 1);
+            } else {
+                // 未ログインユーザーは visibility = 2 (全公開) のイベントのみ表示
+                $query->where('visibility', 2);
+            }
+        });
+
+        // // イベント名での検索
+        // if ($request->filled('search')) {
+        //     $query->where('title', 'like', '%' . $request->search . '%');
+        // }
+
+        // // 開催日での検索
+        // if ($request->filled('from_date') && $request->filled('to_date')) {
+        //     $query->whereBetween('date', [$request->from_date, $request->to_date]);
+        // }
+
+        // 地域での検索
+        if ($request->filled('region')) {
+            $query->where('region_id', $request->region);
+        }
+
+        // カテゴリでの検索
+        if ($request->filled('category')) {
+            $query->whereHas('categories', function ($q) use ($request) {
+                $q->where('categories.category_id', $request->category);
+            });
+        }
+
+        // タグ検索条件
+        if ($request->filled('tags')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->whereIn('tags.tag_id', $request->tags);
+            });
+        }
+
+        // デバッグ用にSQLクエリとバインディングを表示
+        // dd($query->toSql(), $query->getBindings());
+
+        // 結果の取得
+        $events = $query->orderBy('updated_at', 'desc')->paginate(24);
 
         return view('events.index', compact('events', 'tags', 'regions', 'categories'));
     }

@@ -25,10 +25,12 @@
                         </div>
 
                         <!-- 開催日範囲 -->
-                        <div>
+                        <div class="md:col-span-2">
                             <label for="from_date" class="block font-medium text-gray-700">開催日:</label>
-                            <input type="date" id="from_date" name="from_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                            <input type="date" id="to_date" name="to_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <div class="flex space-x-2">
+                                <input type="date" id="from_date" name="from_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <input type="date" id="to_date" name="to_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            </div>
                         </div>
 
                         <!-- 地域 -->
@@ -37,9 +39,35 @@
                             <select id="region" name="region" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                                 <option value="">すべての地域</option>
                                 @foreach ($regions as $region)
-                                <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                <option value="{{ $region->region_id }}">{{ $region->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <!-- カテゴリ -->
+                        <div>
+                            <label for="category" class="block font-medium text-gray-700">カテゴリ:</label>
+                            <select id="category" name="category" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <option value="">すべてのカテゴリ</option>
+                                @foreach ($categories as $category)
+                                <option value="{{ $category->category_id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- タグ -->
+                        <div class="md:col-span-3">
+                            <label class="block font-medium text-gray-700">タグ:</label>
+                            <div class="flex flex-wrap">
+                                @foreach ($tags as $tag)
+                                <div class="flex items-center mr-4 mb-2">
+                                    <!-- idを動的に付与 -->
+                                    <input type="checkbox" id="tag_{{ $tag->tag_id }}" name="tags[]" value="{{ $tag->tag_id }}" class="form-checkbox h-4 w-4 text-blue-600">
+                                    <!-- for属性にidを対応させる -->
+                                    <label for="tag_{{ $tag->tag_id }}" class="ml-2 cursor-pointer">{{ $tag->name }}</label>
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -80,7 +108,18 @@
                 <!-- タイトル -->
                 <h3 class="text-lg font-bold text-blue-500 hover:text-blue-700">{{ trim($event->title) }}</h3>
                 <!-- 日付と場所 -->
-                <p class="text-sm text-gray-600 mt-2">{{ $event->date }} {{ $event->start_time }} - {{ $event->end_time }}</p>
+                @if ($event->date || $event->start_time || $event->end_time)
+                <p class="text-sm text-gray-600 mt-2">
+                    @if ($event->date)
+                    {{ date('Y-m-d', strtotime($event->date)) }}
+                    @endif
+                    @if ($event->start_time && $event->end_time)
+                    {{ date('H:i', strtotime($event->start_time)) }} - {{ date('H:i', strtotime($event->end_time)) }}
+                    @elseif ($event->start_time)
+                    {{ date('H:i', strtotime($event->start_time)) }}
+                    @endif
+                </p>
+                @endif
                 <p class="text-sm text-gray-600 mt-1">{{ $event->venue_name }}</p>
             </a>
             @endforeach
