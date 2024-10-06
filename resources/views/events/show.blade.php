@@ -60,7 +60,7 @@
             </div>
 
             <div class="col-span-1">
-                <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">LINK:</label>
+                <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">参考URL:</label>
                 <a href="{{ $event->reference_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">{{ $event->reference_url ?? '' }}</a>
             </div>
 
