@@ -21,15 +21,15 @@
                         <!-- イベント名 -->
                         <div>
                             <label for="search" class="block font-medium text-gray-700">イベント名:</label>
-                            <input type="text" id="search" name="search" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="text" id="search" name="search" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ request()->input('search') }}">
                         </div>
 
                         <!-- 開催日範囲 -->
                         <div class="md:col-span-2">
                             <label for="from_date" class="block font-medium text-gray-700">開催日:</label>
                             <div class="flex space-x-2">
-                                <input type="date" id="from_date" name="from_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                                <input type="date" id="to_date" name="to_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <input type="date" id="from_date" name="from_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ request()->input('from_date') }}">
+                                <input type="date" id="to_date" name="to_date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ request()->input('to_date') }}">
                             </div>
                         </div>
 
@@ -39,7 +39,9 @@
                             <select id="region" name="region" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                                 <option value="">すべての地域</option>
                                 @foreach ($regions as $region)
-                                <option value="{{ $region->region_id }}">{{ $region->name }}</option>
+                                <option value="{{ $region->region_id }}" {{ request()->input('region') == $region->region_id ? 'selected' : '' }}>
+                                    {{ $region->name }}
+                                </option>
                                 @endforeach
                             </select>
                         </div>
@@ -50,7 +52,9 @@
                             <select id="category" name="category" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                                 <option value="">すべてのカテゴリ</option>
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->category_id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->category_id }}" {{ request()->input('category') == $category->category_id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
                                 @endforeach
                             </select>
                         </div>
@@ -62,7 +66,8 @@
                                 @foreach ($tags as $tag)
                                 <div class="flex items-center mr-4 mb-2">
                                     <!-- idを動的に付与 -->
-                                    <input type="checkbox" id="tag_{{ $tag->tag_id }}" name="tags[]" value="{{ $tag->tag_id }}" class="form-checkbox h-4 w-4 text-blue-600">
+                                    <input type="checkbox" id="tag_{{ $tag->tag_id }}" name="tags[]" value="{{ $tag->tag_id }}" class="form-checkbox h-4 w-4 text-blue-600"
+                                        {{ is_array(request()->input('tags')) && in_array($tag->tag_id, request()->input('tags')) ? 'checked' : '' }}>
                                     <!-- for属性にidを対応させる -->
                                     <label for="tag_{{ $tag->tag_id }}" class="ml-2 cursor-pointer">{{ $tag->name }}</label>
                                 </div>
