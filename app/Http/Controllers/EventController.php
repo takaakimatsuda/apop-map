@@ -30,15 +30,15 @@ class EventController extends Controller
             }
         });
 
-        // // イベント名での検索
-        // if ($request->filled('search')) {
-        //     $query->where('title', 'like', '%' . $request->search . '%');
-        // }
+        // イベント名での検索
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
 
-        // // 開催日での検索
-        // if ($request->filled('from_date') && $request->filled('to_date')) {
-        //     $query->whereBetween('date', [$request->from_date, $request->to_date]);
-        // }
+        // 開催日での検索
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('date', [$request->from_date, $request->to_date]);
+        }
 
         // 地域での検索
         if ($request->filled('region')) {
@@ -59,9 +59,6 @@ class EventController extends Controller
             });
         }
 
-        // デバッグ用にSQLクエリとバインディングを表示
-        // dd($query->toSql(), $query->getBindings());
-
         // 結果の取得
         $events = $query->orderBy('updated_at', 'desc')->paginate(24);
 
@@ -81,10 +78,13 @@ class EventController extends Controller
     public function store(Request $request)
     {
         \Log::info('イベント登録リクエスト:', $request->all());
-            // バリデーションルールの定義
-            $validatedData = $request->validate([
-                'title' => 'required|string|max:255',  // イベント名は必須
-                'category_id' => 'required|array',  // カテゴリーは配列で、少なくとも1つ選択されている必要がある
+
+        // バリデーションルールの定義
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',  // イベント名は必須
+            'category_id' => 'required|array',  // カテゴリーは配列で、少なくとも1つ選択されている必要がある
+            'tags' => 'nullable|array',  // タグも配列で送信される
+            'tags.*' => 'exists:tags,tag_id',  // タグが有効か確認
             'date' => 'nullable|date',  // その他のフィールドは任意
             'start_time' => 'nullable|date_format:H:i',
             'end_time' => 'nullable|date_format:H:i',
@@ -95,7 +95,7 @@ class EventController extends Controller
             'region_id' => 'nullable|exists:regions,region_id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 画像のバリデーション追加
             'visibility' => 'required|integer|in:0,1,2',
-        ],[
+        ], [
             'title.required' => 'イベント名は必須です。',
             'category_id.required' => 'カテゴリーを選択してください。',
         ]);
@@ -110,9 +110,9 @@ class EventController extends Controller
 
             // 画像をリサイズ
             $image = Image::make($file)->resize(800, 600, function ($constraint) {
-                    $constraint->aspectRatio();  // アスペクト比を保持
-                    $constraint->upsize();  // サイズを超えないようにする
-                })->encode();  // 画像データをエンコード
+                $constraint->aspectRatio();  // アスペクト比を保持
+                $constraint->upsize();  // サイズを超えないようにする
+            })->encode();  // 画像データをエンコード
 
             // リサイズした画像をS3に保存
             $imagePath = 'events/' . $file->hashName();  // ファイル名を生成
@@ -126,6 +126,11 @@ class EventController extends Controller
 
         // カテゴリーの関連付け
         $event->categories()->sync($request->category_id);
+
+        // タグの関連付け
+        if ($request->filled('tags')) {
+            $event->tags()->sync($request->tags);  // タグを中間テーブルに保存（タイムスタンプは自動で更新される）
+        }
 
         // 成功メッセージと共にイベント一覧にリダイレクト
         return redirect()->route('events.index')->with('success', 'イベントが正常に作成されました。');

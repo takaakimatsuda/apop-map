@@ -28,10 +28,7 @@ class TagSeeder extends Seeder
         Tag::create(['name' => 'アニソン', 'created_at' => $now, 'updated_at' => $now]);
         Tag::create(['name' => 'ボカロ', 'created_at' => $now, 'updated_at' => $now]);
         Tag::create(['name' => 'J-POP', 'created_at' => $now, 'updated_at' => $now]);
-        Tag::create(['name' => 'Vtuber', 'created_at' => $now, 'updated_at' => $now]);
+        Tag::create(['name' => 'VTuber', 'created_at' => $now, 'updated_at' => $now]);
         Tag::create(['name' => 'ゲーソン', 'created_at' => $now, 'updated_at' => $now]);
-
-        // その他のデータをファクトリで生成
-        Tag::factory()->count(3)->create();
     }
 }

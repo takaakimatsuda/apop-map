@@ -89,6 +89,19 @@
                     <input type="url" id="reference_url" name="reference_url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
 
+                <!-- タグのチェックボックス -->
+                <div class="col-span-1">
+                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">タグ:</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        @foreach($tags as $tag)
+                        <div class="flex items-center">
+                            <input type="checkbox" id="tag_{{ $tag->tag_id }}" name="tags[]" value="{{ $tag->tag_id }}" class="form-checkbox h-4 w-4 text-blue-600">
+                            <label for="tag_{{ $tag->tag_id }}" class="ml-2">{{ $tag->name }}</label>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
                 <!-- 公開範囲の選択 -->
                 <div class="mb-6 mt-4">
                     <label for="visibility" class="block mb-2 text-sm font-bold text-gray-900">公開範囲:</label>

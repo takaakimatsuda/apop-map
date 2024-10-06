@@ -33,7 +33,7 @@ class Tag extends Model
     // イベントとの多対多の関係を定義
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'event_tags', 'tag_id', 'event_id')->withTimestamps();
+        return $this->belongsToMany(Event::class, 'event_tags', 'tag_id', 'event_id');
     }
 
     // タグが削除されたとき、中間テーブルの関連レコードも削除

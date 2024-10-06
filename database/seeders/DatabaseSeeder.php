@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             EventSeeder::class,  // 100件のイベントを作成
             EventCategorySeeder::class,  // イベントにランダムにカテゴリーを関連付け
+            EventTagSeeder::class, // 中間テーブルのSeederを追加
         ]);
     }
 }
