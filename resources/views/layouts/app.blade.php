@@ -35,6 +35,15 @@
         <main>
             {{ $slot }}
         </main>
+
+        <!-- フッターの追加 -->
+        <footer class="bg-gray-200 text-center py-4 mt-8">
+            <div class="container mx-auto">
+                <p class="text-gray-600 text-sm">
+                    © 2024 A-POP MAP. All rights reserved.
+                </p>
+            </div>
+        </footer>
     </div>
 </body>
 
