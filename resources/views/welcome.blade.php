@@ -33,7 +33,7 @@
         <h2 class="text-2xl font-bold mb-4">{{ $categoryName }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($eventsByCategory[$categoryId] as $event)
-            <div class="border rounded-lg shadow-md p-4 bg-white">
+            <a href="{{ route('events.show', $event->event_id) }}" class="border rounded-lg shadow-md p-4 bg-white block hover:shadow-lg transition-shadow duration-200">
                 <!-- イベントの画像 -->
                 <div class="mb-4">
                     @if ($event->image_url)
@@ -59,8 +59,7 @@
                 </p>
                 @endif
                 <p class="text-sm">{{ $event->venue_name }}</p>
-                <a href="{{ route('events.show', $event->event_id) }}" class="text-blue-500 hover:underline">詳細を見る</a>
-            </div>
+            </a>
             @endforeach
         </div>
         <!-- 他のカテゴリーも調べるボタン -->
