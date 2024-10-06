@@ -34,18 +34,18 @@
 
             <div class="col-span-1">
                 <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">開催日:</label>
-                <p class="">{{ $event->date ?? '' }}</p>
+                <p class="">{{ $event->date ? date('Y-m-d', strtotime($event->date)) : '' }}</p>
             </div>
 
             <!-- 開始時間と終了時間表示 -->
             <div class="col-span-1 grid grid-cols-2 gap-6">
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">開始時間:</label>
-                    <p class="">{{ $event->start_time ?? '' }}</p>
+                    <p class="">{{ $event->start_time ? date('H:i', strtotime($event->start_time)) : '' }}</p>
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-900 label-with-border">終了時間:</label>
-                    <p class="">{{ $event->end_time ?? '' }}</p>
+                    <p class="">{{ $event->end_time ? date('H:i', strtotime($event->end_time)) : '' }}</p>
                 </div>
             </div>
 
