@@ -107,7 +107,9 @@ class EventController extends Controller
         }
 
         // 結果の取得
-        $events = $query->orderBy('updated_at', 'desc')->paginate(24);
+        $events = $query->orderBy('updated_at', 'desc')
+        ->paginate(24)
+        ->appends(request()->query());
 
         return view('events.index', compact('events', 'tags', 'regions', 'categories', 'selectedCategoryId'));
     }
