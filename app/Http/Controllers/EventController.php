@@ -188,8 +188,8 @@ class EventController extends Controller
             $event->tags()->sync($request->tags);  // タグを中間テーブルに保存（タイムスタンプは自動で更新される）
         }
 
-        // 成功メッセージと共にイベント一覧にリダイレクト
-        return redirect()->route('events.index')->with('success', 'イベントが正常に作成されました。');
+        // 成功メッセージと共にイベント管理画面にリダイレクト
+        return redirect()->route('events.my')->with('success', 'イベントが正常に作成されました。');
     }
 
     // イベント詳細の表示

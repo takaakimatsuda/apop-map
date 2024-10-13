@@ -4,6 +4,22 @@
     @endsection
 
     <div class="container mx-auto p-4" style="width: 50%;">
+        <!-- パンくずリスト -->
+        <nav class="mb-4 text-sm text-gray-600">
+            <a href="{{ route('events.index', request()->query()) }}" class="text-blue-600 hover:text-blue-800">
+                イベント一覧
+            </a> >
+            <!-- イベントに関連するすべてのカテゴリーを表示 -->
+            @if($event->categories && $event->categories->count() > 0)
+            @foreach($event->categories as $category)
+            <span>{{ $category->name }}@if(!$loop->last), @endif</span>
+            @endforeach
+            @else
+            <span>未分類</span>
+            @endif
+        </nav>
+
+
         <!-- フライヤー画像 -->
         <div class="mb-6">
             @if ($event->image_url)
@@ -79,7 +95,9 @@
             </div>
 
             <div class="col-span-1">
-                <a href="{{ route('events.index') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">戻る</a>
+                <a href="{{ route('events.index', request()->query()) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    戻る
+                </a>
             </div>
         </div>
     </div>

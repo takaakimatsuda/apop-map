@@ -114,7 +114,7 @@
         <!-- イベント一覧を3列グリッドで表示 -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             @foreach ($events as $event)
-            <a href="{{ route('events.show', $event->event_id) }}" class="border rounded-lg shadow-md p-4 bg-white block hover:bg-gray-100 transition duration-200">
+            <a href="{{ route('events.show', array_merge(['event' => $event->event_id], request()->query())) }}" class="border rounded-lg shadow-md p-4 bg-white block hover:bg-gray-100 transition duration-200">
                 <div class="mb-4">
                     @if ($event->image_url)
                     <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="w-full h-72 object-cover rounded-lg">
