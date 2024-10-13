@@ -28,8 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
-    }
+        // ログイン後のリダイレクト先を /my-events に変更
+        return redirect()->intended('/my-events');    }
 
     /**
      * Destroy an authenticated session.
