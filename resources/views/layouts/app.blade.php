@@ -14,6 +14,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <!-- Page-specific CSS -->
     @yield('styles')
 </head>
@@ -39,6 +40,11 @@
         <!-- フッターの追加 -->
         <footer class="bg-gray-200 text-center py-4 mt-8">
             <div class="container mx-auto">
+                <p class="mt-2">
+                    <a href="/login" class="text-blue-600 hover:underline">
+                        オーガナイザー管理画面
+                    </a>
+                </p>
                 <p class="text-gray-600 text-sm">
                     © 2024 A-POP MAP. All rights reserved.
                 </p>

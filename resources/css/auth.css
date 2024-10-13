@@ -1,0 +1,19 @@
+/* 認証ページ共通のスタイル */
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* 上下の中央寄せ */
+  align-items: center;
+  /* 左右の中央寄せ */
+  min-height: 100vh;
+  /* 画面全体の高さ */
+}
+
+.auth-page main {
+  flex-grow: 1;
+}
+
+.auth-page footer {
+  margin-top: auto;
+}
