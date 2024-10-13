@@ -1,5 +1,6 @@
 <x-app-layout>
-    <div class="container mx-auto p-4" style="width: 80%;">
+    <div class="container mx-auto p-4" style="width: 80%; min-height: calc(100vh - 120px);">
+        <!-- 成功メッセージ -->
         @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
             <strong class="font-bold">成功！</strong>
@@ -101,22 +102,17 @@
         <!-- イベント一覧を3列グリッドで表示 -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             @foreach ($events as $event)
-            <!-- カード全体をリンクで囲む -->
             <a href="{{ route('events.show', $event->event_id) }}" class="border rounded-lg shadow-md p-4 bg-white block hover:bg-gray-100 transition duration-200">
-                <!-- イベントの画像 -->
                 <div class="mb-4">
                     @if ($event->image_url)
-                    <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="w-full h-72 object-contain rounded-lg">
+                    <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="w-full h-72 object-cover rounded-lg">
                     @else
                     <div class="w-full h-72 flex items-center justify-center bg-gray-200 rounded-lg">
                         <p class="text-gray-500">NO EVENT IMAGE</p>
                     </div>
                     @endif
                 </div>
-                <!-- タイトル -->
                 <h3 class="text-lg font-bold text-blue-500 hover:text-blue-700">{{ trim($event->title) }}</h3>
-                <!-- 日付と場所 -->
-                @if ($event->date || $event->start_time || $event->end_time)
                 <p class="text-sm text-gray-600 mt-2">
                     @if ($event->date)
                     {{ date('Y-m-d', strtotime($event->date)) }}
@@ -127,7 +123,6 @@
                     {{ date('H:i', strtotime($event->start_time)) }}
                     @endif
                 </p>
-                @endif
                 <p class="text-sm text-gray-600 mt-1">{{ $event->venue_name }}</p>
             </a>
             @endforeach

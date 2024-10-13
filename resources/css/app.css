@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: #F3F4F6;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* 画面の高さに合わせる */
+}
+
+.main-content {
+  flex: 1;
+  /* コンテンツ部分を可変に */
+  padding-bottom: 2rem;
+    /* コンテンツ下に少し余白を追加 */
+}

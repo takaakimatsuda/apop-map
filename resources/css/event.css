@@ -19,3 +19,26 @@
   margin-bottom: 20px;
   /* 次の要素との間隔 */
 }
+
+/* ページ全体を覆うコンテナに最低の高さを指定 */
+.container {
+  min-height: calc(100vh - 120px);
+  /* 120pxはヘッダーやフッターの高さに応じて調整 */
+}
+
+/* カードの高さを統一 */
+.grid>a {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* イベント画像の高さを固定 */
+.grid>a .h-72 {
+  height: 200px;
+  /* 画像の高さを固定 */
+  object-fit: cover;
+  /* 画像の縦横比を保持しつつトリミング */
+  background-color: #f3f4f6;
+}

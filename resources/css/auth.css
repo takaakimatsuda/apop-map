@@ -9,11 +9,3 @@
   min-height: 100vh;
   /* 画面全体の高さ */
 }
-
-.auth-page main {
-  flex-grow: 1;
-}
-
-.auth-page footer {
-  margin-top: auto;
-}
