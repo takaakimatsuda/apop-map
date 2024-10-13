@@ -44,6 +44,10 @@
                     <a href="/login" class="text-blue-600 hover:underline">
                         オーガナイザー管理画面
                     </a>
+                    |
+                    <a href="/terms" class="text-blue-600 hover:underline">
+                        利用規約
+                    </a>
                 </p>
                 <p class="text-gray-600 text-sm">
                     © 2024 A-POP MAP. All rights reserved.

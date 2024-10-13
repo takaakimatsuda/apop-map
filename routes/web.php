@@ -6,6 +6,9 @@ use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [EventController::class, 'welcome'])->name('welcome');
+Route::get('/terms', function () {
+    return view('terms');
+})->name('terms');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
