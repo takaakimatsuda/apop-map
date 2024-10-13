@@ -3,10 +3,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
+                <!-- ロゴ -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <span class="text-black font-bold text-xl" style="font-family: 'Montserrat', sans-serif;">A-POP MAP</span>
                     </a>
                 </div>
 
@@ -51,7 +51,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('プロフィール') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -60,7 +60,7 @@
 
                             <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('ログアウト') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -113,7 +113,7 @@
 
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
+                        {{ __('プロフィール') }}
                     </x-responsive-nav-link>
 
                     <!-- Authentication -->
@@ -122,7 +122,7 @@
 
                         <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('ログアウト') }}
                         </x-responsive-nav-link>
                     </form>
                 </div>
