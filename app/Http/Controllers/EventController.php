@@ -106,6 +106,11 @@ class EventController extends Controller
             });
         }
 
+        // 公開範囲の検索
+        if ($request->filled('visibility')) {
+            $query->where('visibility', $request->visibility);
+        }
+
         // 結果の取得
         $events = $query->orderBy('updated_at', 'desc')
         ->paginate(24)

@@ -63,6 +63,18 @@
                             </select>
                         </div>
 
+                        <!-- 公開範囲 (ログインしている場合のみ表示) -->
+                        @auth
+                        <div>
+                            <label for="visibility" class="block font-medium text-gray-700">公開範囲:</label>
+                            <select id="visibility" name="visibility" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <option value="">すべて</option>
+                                <option value="2" {{ request()->input('visibility') == '2' ? 'selected' : '' }}>全公開のみ</option>
+                                <option value="1" {{ request()->input('visibility') == '1' ? 'selected' : '' }}>仮登録のみ</option>
+                            </select>
+                        </div>
+                        @endauth
+
                         <!-- タグ -->
                         <div class="md:col-span-3">
                             <label class="block font-medium text-gray-700">タグ:</label>
