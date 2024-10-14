@@ -65,7 +65,7 @@ class EventRegistrationTest extends TestCase
         $event = Event::where('title', 'テストイベント')->first();
 
         // リダイレクトされることを確認
-        $response->assertRedirect(route('events.index'));
+        $response->assertRedirect(route('events.my'));
 
         // セッションにメッセージがあるか確認
         $response->assertSessionHas('success', 'イベントが正常に作成されました。');
