@@ -7,7 +7,9 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/css/event.css',
+                'resources/css/auth.css',
                 'resources/js/app.js',
+                'resources/js/bootstrap.js',
             ],
             refresh: true,
         }),
